@@ -21,9 +21,14 @@ public class SessaoDao {
 	}
 	
 	public List<Sessao> buscaSessoesDaSala(Sala sala){
-		return manager.createQuery("select s from Sessao s where s.sala = :sala", Sessao.class)
+		return manager .createQuery("select s from Sessao s where s.sala =:sala", Sessao.class)
 				.setParameter("sala", sala)
 				.getResultList();
 	}
+	
+	public List<Sessao> findAll() {
+        return manager.createQuery("select s from Sessao s", Sessao.class)
+        		.getResultList();
+    }
 
 }
