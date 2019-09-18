@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import br.com.caelum.ingresso.dao.FilmeDao;
 import br.com.caelum.ingresso.dao.SalaDao;
 import br.com.caelum.ingresso.dao.SessaoDao;
-import br.com.caelum.ingresso.model.Filme;
 import br.com.caelum.ingresso.model.Sessao;
 import br.com.caelum.ingresso.model.form.SessaoForm;
 import br.com.caelum.ingresso.validador.GerenciadorDeSessao;
@@ -32,7 +31,7 @@ public class SessaoController {
 	
 	@Autowired
 	private SessaoDao sessaoDao;
-
+	
 	@GetMapping("/admin/sessao")
 	public ModelAndView form(@RequestParam("salaId") Integer salaId, SessaoForm form) {
 		
@@ -61,6 +60,8 @@ public class SessaoController {
 			
 			return new ModelAndView("redirect:/admin/sala/" + form.getSalaId()+"/sessoes");
 		}
+		
+		result.rejectValue("horario", "error.sessionConflict", "Conflito com sessões existentes! Escolha outro horário.");
 		
 		
 		return form(form.getSalaId(), form);

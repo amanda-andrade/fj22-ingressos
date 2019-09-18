@@ -4,18 +4,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import br.com.caelum.ingresso.dao.SessaoDao;
 import br.com.caelum.ingresso.model.Sessao;
 
-@Component
+//@Component
 public class GerenciadorDeSessao {
 	
-	@Autowired
-	private SessaoDao sessaoDao;
+	//@Autowired 
+	//private SessaoDao sessaoDao;
 	
 	private List<Sessao> sessoesDaSala;
 	
@@ -23,9 +18,7 @@ public class GerenciadorDeSessao {
 		this.sessoesDaSala = sessoesDaSala;
 	}
 	
-	public boolean cabe(Sessao sessaoNova) {
-		List<Sessao> sessoes = sessaoDao.findAll();
-		
+	public boolean cabe(Sessao sessaoNova) {	
 		if(terminaAmanha(sessaoNova)) {
 			return false;
 		}
@@ -62,7 +55,9 @@ public class GerenciadorDeSessao {
 	private LocalDateTime getTerminoDeSessaoComDiaDeHoje(Sessao sessao) {
 		LocalDateTime inicioDaSessao = getInicioDaSessaoDeHoje(sessao);
 		
-		return inicioDaSessao.plus(sessao.getFilme().getDuracao());
+		inicioDaSessao = inicioDaSessao.plus(sessao.getFilme().getDuracao());
+		
+		return inicioDaSessao;
 	}
 
 	private LocalDateTime getInicioDaSessaoDeHoje(Sessao sessao) {
