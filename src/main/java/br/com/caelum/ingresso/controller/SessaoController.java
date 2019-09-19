@@ -19,8 +19,8 @@ import br.com.caelum.ingresso.dao.FilmeDao;
 import br.com.caelum.ingresso.dao.SalaDao;
 import br.com.caelum.ingresso.dao.SessaoDao;
 import br.com.caelum.ingresso.enums.TipoDeIngresso;
+import br.com.caelum.ingresso.model.Carrinho;
 import br.com.caelum.ingresso.model.ImagemDaCapa;
-import br.com.caelum.ingresso.model.Sala;
 import br.com.caelum.ingresso.model.Sessao;
 import br.com.caelum.ingresso.model.form.SessaoForm;
 import br.com.caelum.ingresso.rest.OmdbClient;
@@ -38,6 +38,9 @@ public class SessaoController {
 	@Autowired
 	private SessaoDao sessaoDao;
 	
+	@Autowired
+	private Carrinho carrinho;
+	
 	@GetMapping("/sessao/{sessaoId}/lugares")
 	public ModelAndView form(@PathVariable("sessaoId") Integer id) {
 		ModelAndView modelAndView = new ModelAndView("sessao/lugares");
@@ -48,10 +51,11 @@ public class SessaoController {
 		
 		Optional<ImagemDaCapa> detalhes = cliente.pegaDetalhesDo(sessao.getFilme(),ImagemDaCapa.class);
 		
-		modelAndView.addObject("imagemCapa", detalhes.orElse(new ImagemDaCapa()));
-
-		modelAndView.addObject("tiposDeIngressos", TipoDeIngresso.values());
 		modelAndView.addObject("sessao", sessao);
+		modelAndView.addObject("carrinho", carrinho);
+		modelAndView.addObject("imagemCapa", detalhes.orElse(new ImagemDaCapa()));
+		modelAndView.addObject("tiposDeIngressos", TipoDeIngresso.values());
+		
 		return modelAndView;
 	}
 	
