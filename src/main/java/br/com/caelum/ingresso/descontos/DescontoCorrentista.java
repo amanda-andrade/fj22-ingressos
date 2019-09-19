@@ -9,4 +9,11 @@ public class DescontoCorrentista implements Desconto {
 		return preco.multiply(BigDecimal.valueOf(0.7));
 	}
 
+	@Override
+	public String getDescricao() {
+		return "Desconto correntista!";
+	}
+	
+	
+
 }

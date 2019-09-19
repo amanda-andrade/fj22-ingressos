@@ -12,7 +12,7 @@ import br.com.caelum.ingresso.model.Filme;
 @Component
 public class OmdbClient {
 
-	public Optional<DetalhesDoFilme> get(Filme filme) {
+	public <T> Optional<T> pegaDetalhesDo(Filme filme, Class<T> tClass) {
 				
 		RestTemplate cliente = new RestTemplate();
 		
@@ -22,8 +22,8 @@ public class OmdbClient {
     	
     	try {
     		
-    		DetalhesDoFilme detalhesDoFilme = cliente.getForObject(urlCompleta, DetalhesDoFilme.class);
-    		return Optional.ofNullable(detalhesDoFilme);
+    		T detalhesGenericos = cliente.getForObject(urlCompleta, tClass);
+    		return Optional.ofNullable(detalhesGenericos);
     		
 		} catch (RestClientException e) {
 			return Optional.empty();

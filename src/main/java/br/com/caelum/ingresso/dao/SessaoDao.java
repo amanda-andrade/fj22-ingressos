@@ -38,4 +38,8 @@ public class SessaoDao {
         		.getResultList();
     }
 
+	public Sessao findOne(Integer sessaoId) {
+	        return manager.find(Sessao.class, sessaoId);
+	}
+
 }
